@@ -33,5 +33,20 @@ class ScalesController extends Controller{
         $data->pitches = Scales::minor($root);
         return response()->json($data,200);
     }
+    public function getPentatonicMajorScale($root){
+        if(!in_array($root, Scales::PITCHES_SHARP) && !in_array($root, Scales::PITCHES_FLAT))
+            return response()->json((object)array('error'=>"Not Found"),200);
 
+        $data = (object) array('root' => $root, 'type' => 'Major Pentatonic', 'pitches' => []);
+        $data->pitches = Scales::majorPentatonic($root);
+        return response()->json($data,200);
+    }
+    public function getPentatonicMinorScale($root){
+        if(!in_array($root, Scales::PITCHES_SHARP) && !in_array($root, Scales::PITCHES_FLAT))
+            return response()->json((object)array('error'=>"Not Found"),200);
+
+        $data = (object) array('root' => $root, 'type' => 'Minor Pentatonic', 'pitches' => []);
+        $data->pitches = Scales::minorPentatonic($root);
+        return response()->json($data,200);
+    }
 }

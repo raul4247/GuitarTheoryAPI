@@ -13,6 +13,7 @@ $router->get('CurrentVersion/', function () use ($router){
 });
 
 $router->get('Scale/Chromatic/{accidental}',  ['uses' => 'ScalesController@getChromaticScale']);
-
 $router->get('Scale/Major/{root}',  ['uses' => 'ScalesController@getMajorScale']);
 $router->get('Scale/Minor/{root}',  ['uses' => 'ScalesController@getMinorScale']);
+$router->get('Scale/Pentatonic/Major/{root}',  ['uses' => 'ScalesController@getPentatonicMajorScale']);
+$router->get('Scale/Pentatonic/Minor/{root}',  ['uses' => 'ScalesController@getPentatonicMinorScale']);
