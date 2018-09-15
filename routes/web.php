@@ -12,4 +12,7 @@ $router->get('CurrentVersion/', function () use ($router){
     return "v0.1";
 });
 
-$router->get('Scale/{type}/{root}',  ['uses' => 'ScalesController@getScale']);
+$router->get('Scale/Chromatic/{accidental}',  ['uses' => 'ScalesController@getChromaticScale']);
+
+$router->get('Scale/Major/{root}',  ['uses' => 'ScalesController@getMajorScale']);
+$router->get('Scale/Minor/{root}',  ['uses' => 'ScalesController@getMinorScale']);

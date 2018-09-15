@@ -7,28 +7,31 @@ use Illuminate\Http\Request;
 use App\Util\Scales;
 
 class ScalesController extends Controller{
-    public function getScale($type, $root){
-        $data = (object) array('root' => $root, 'type' => $type, 'pitches' => []);
-        switch ($type){
-            case "Chromatic":
-                $data->pitches = Scales::chromatic($root);
-                break;
-            case "Major":
-                $data->pitches = Scales::major($root);
-                break;
-            case "Minor":
-                $data->pitches = Scales::minor($root);
-                break;
-            case "Major-Pentatonic":
-                $data->pitches = Scales::majorPentatonic($root);
-                break;
-            case "Minor-Pentatonic":
-                $data->pitches = Scales::minorPentatonic($root);
-                break;
-            default:
-                return response()->json("NOT FOUND",200);
-                break;
-        }
+    public function getChromaticScale($accidental){
+        if($accidental!='Sharp' && $accidental!='Flat')
+            return response()->json((object)array('error'=>"Not Found"),200);
+
+        $data = (object) array('type' => 'Chromatic','accidental' => $accidental , 'pitches' => []);
+        $data->pitches = Scales::chromatic($accidental);
         return response()->json($data, 200);
     }
+
+    public function getMajorScale($root){
+        if(!in_array($root, Scales::PITCHES_SHARP) && !in_array($root, Scales::PITCHES_FLAT))
+            return response()->json((object)array('error'=>"Not Found"),200);
+
+        $data = (object) array('root' => $root, 'type' => 'Major', 'pitches' => []);
+        $data->pitches = Scales::major($root);
+        return response()->json($data,200);
+    }
+
+    public function getMinorScale($root){
+        if(!in_array($root, Scales::PITCHES_SHARP) && !in_array($root, Scales::PITCHES_FLAT))
+            return response()->json((object)array('error'=>"Not Found"),200);
+
+        $data = (object) array('root' => $root, 'type' => 'Minor', 'pitches' => []);
+        $data->pitches = Scales::minor($root);
+        return response()->json($data,200);
+    }
+
 }
